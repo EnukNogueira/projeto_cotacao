@@ -1,98 +1,117 @@
 # Currency Data Pipeline
 
-API REST desenvolvida em Python com FastAPI para consulta e rastreamento de cotações históricas do dólar (USD/BRL) em tempo real.
+API desenvolvida em Python com FastAPI para consulta de cotações do dólar (USD/BRL) através de uma API financeira externa.
 
 ---
 
 ## Sobre o projeto
 
-Este projeto expõe endpoints para consulta de cotações do dólar a partir de uma API financeira pública. O foco está na integração com fontes de dados externas, tratamento do payload JSON retornado e estruturação da resposta para consumo imediato.
+O projeto foi desenvolvido para praticar integração entre uma aplicação Python e uma fonte externa de dados financeiros.
 
-O projeto está em desenvolvimento ativo — a arquitetura atual serve como base para a evolução para um pipeline de dados completo com persistência, análise histórica e agendamento de coletas.
+A aplicação realiza uma requisição para obter as cotações do dólar e disponibiliza um endpoint que permite pesquisar se determinado valor de cotação foi registrado nas últimas 30 cotações disponíveis.
+
+---
+
+## Funcionalidades
+
+- Consulta de cotações do dólar
+- Integração com API financeira externa
+- Pesquisa de um valor específico de cotação
+- Retorno da data em que o valor foi encontrado
+- Tratamento básico para valores não encontrados
+- Documentação automática dos endpoints através do FastAPI
 
 ---
 
 ## Tecnologias utilizadas
 
-- **Python 3** — linguagem principal
-- **FastAPI** — framework para construção da API REST
-- **Requests** — consumo da API externa de cotações
-- **AwesomeAPI** — fonte de dados financeiros (USD-BRL)
+- **Python 3**
+- **FastAPI** — criação da API REST
+- **Requests** — requisições HTTP
+- **AwesomeAPI** — fonte dos dados de cotação
+- **Uvicorn** — servidor para execução da aplicação
 
 ---
 
-## Endpoints disponíveis
-
-### `GET /Bem-vindo`
-Rota de verificação. Retorna uma mensagem de boas-vindas confirmando que a API está no ar.
-
-**Resposta:**
-```json
-{
-  "Início": "Bem-vindo à API de cotação do dólar!"
-}
-```
-
----
+## Endpoint principal
 
 ### `GET /cotacao-dolar?pesquisa={valor}`
-Busca nas últimas 30 cotações diárias do dólar se um determinado valor de compra (`bid`) foi registrado. Retorna a data correspondente caso encontrado.
 
-**Parâmetro:**
+Pesquisa um determinado valor de cotação do dólar entre as últimas 30 cotações.
 
-| Nome      | Tipo   | Descrição                              |
-|-----------|--------|----------------------------------------|
-| `pesquisa` | float | Valor de cotação a ser buscado (ex: 5.72) |
+Exemplo:
 
-**Resposta (sucesso):**
-```json
-{
-  "data_encontrada": "2025-06-10 10:30:00",
-  "valor_encontrado": "O valor do dólar nessa data foi: 5.72"
-}
+```text
+/cotacao-dolar?pesquisa=5.72
 ```
 
-**Resposta (não encontrado):**
-```json
-{
-  "ERRO": "Valor não encontrado na cotação do dólar."
-}
-```
+Quando o valor é encontrado, a API retorna a data e a cotação correspondente.
+
+---
+
+## Estrutura do projeto
+
+- `projeto_dolar.py` — aplicação FastAPI
+- `README.md` — documentação do projeto
 
 ---
 
 ## Como executar
 
+Clone o repositório:
+
 ```bash
-# Clone o repositório
 git clone https://github.com/EnukNogueira/currency-data-pipeline.git
 cd currency-data-pipeline
+```
 
-# Instale as dependências
+Instale as dependências:
+
+```bash
 pip install fastapi requests uvicorn
+```
 
-# Execute a API
+Execute a aplicação:
+
+```bash
 uvicorn projeto_dolar:app --reload
 ```
 
-Acesse a documentação interativa gerada automaticamente pelo FastAPI em:
-`http://127.0.0.1:8000/docs`
+A documentação interativa estará disponível em:
+
+```text
+http://127.0.0.1:8000/docs
+```
 
 ---
 
-## Próximos passos
+## Conceitos praticados
 
-- [ ] Persistência das cotações coletadas em banco de dados
-- [ ] Endpoint para análise histórica e variação percentual
-- [ ] Agendamento de coletas automáticas com APScheduler
-- [ ] Suporte a múltiplas moedas (EUR, GBP, BTC)
-- [ ] Exportação dos dados em CSV para análise
+- [x] Criação de API REST
+- [x] FastAPI
+- [x] Requisições HTTP
+- [x] Consumo de API externa
+- [x] Manipulação de dados JSON
+- [x] Parâmetros de consulta
+- [x] Tratamento de respostas
+- [x] Documentação automática de API
+
+---
+
+## Objetivo do estudo
+
+O objetivo foi praticar o consumo de APIs externas utilizando Python e entender como disponibilizar esses dados através de uma API própria.
+
+O projeto também serviu como base para meus estudos sobre integração e manipulação de dados.
 
 ---
 
 ## Autor
 
-**Enuk Nogueira** — Desenvolvedor focado em Engenharia de Dados e Automação de Processos
+**Enuk Nogueira**
+
+Estudante de Análise e Desenvolvimento de Sistemas pela PUCPR, com foco em Análise de Dados e Ciência de Dados.
 
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/enuknogueira/)
+
 [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/EnukNogueira)
